@@ -60,6 +60,7 @@ local codes = hs.keycodes.map
 codes.leftShift = 56
 codes.leftCtrl = 59
 codes.rightCmd = 54
+codes.capsLock = 57
 
 local state = {
   startTime = now(),
