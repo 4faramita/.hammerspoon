@@ -1,3 +1,9 @@
+function moveMouseToFrontmostWin ()
+  local winFrame = win():frame()
+  local mousePosition = hs.mouse.getRelativePosition()
+  local fullFrame = hs.mouse.getCurrentScreen():fullFrame()
+  hs.mouse.setAbsolutePosition({x=winFrame.x+winFrame.w*mousePosition.x/fullFrame.w, y=winFrame.y+winFrame.h*mousePosition.y/fullFrame.h})
+end
 local function toggleAppByBundleID (id, max)
   return function ()
     local app = hs.application.frontmostApplication()
@@ -5,6 +11,7 @@ local function toggleAppByBundleID (id, max)
       app:hide()
     else
       hs.application.launchOrFocusByBundleID(id)
+      moveMouseToFrontmostWin()
       if max then
         win():maximize()
       end
@@ -49,6 +56,7 @@ for k,v in pairs({
   ['-'] = saveLayout,
   ['='] = restoreLayout,
   ['tab'] = winLoopScreen,
+  escape = moveMouseToFrontmostWin,
 }) do
   if type(v) == 'function' then
     hs.hotkey.bind('cmd-ctrl-alt', k, v)

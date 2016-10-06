@@ -46,3 +46,7 @@ caffeinateWatcher = hs.caffeinate.watcher.new(function(e)
     saveLayout()
   end
 end):start()
+
+expose = hs.expose.new(nil,{})
+hs.hotkey.bind('ctrl','tab', function()expose:toggleShow()end)
+hs.hotkey.bind('alt','tab', hs.hints.windowHints)
