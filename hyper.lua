@@ -18,7 +18,17 @@ local function toggleAppByBundleID (id, max)
     end
   end
 end
-
+function clickNotification ()
+  local mouse = hs.eventtap.event.newMouseEvent
+  local types = hs.eventtap.event.types
+  local point = {
+    x=hs.screen.primaryScreen():fullFrame().w-200,
+    y=70,
+  }
+  local clickState = hs.eventtap.event.properties.mouseEventClickState
+  mouse(types.leftMouseDown, point):setProperty(clickState, 1):post()
+  mouse(types.leftMouseUp, point):setProperty(clickState, 1):post()
+end
 for k,v in pairs({
   a = 'com.github.atom',
   b = 'com.tapbots.TweetbotMac',
@@ -51,7 +61,7 @@ for k,v in pairs({
   -- ['1'] = 'co.zeit.hyperterm',
   ['2'] = 'com.google.Chrome',
   [','] = 'com.apple.systempreferences',
-  ['.'] = '',
+  ['.'] = clickNotification,
   ['\\'] = reload,
   ['-'] = saveLayout,
   ['='] = restoreLayout,
