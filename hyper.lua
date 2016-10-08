@@ -22,8 +22,8 @@ function clickNotification ()
   local mouse = hs.eventtap.event.newMouseEvent
   local types = hs.eventtap.event.types
   local point = {
-    x=hs.screen.primaryScreen():fullFrame().w-200,
-    y=70,
+    x=hs.screen.primaryScreen():fullFrame().w-80,
+    y=65,
   }
   local clickState = hs.eventtap.event.properties.mouseEventClickState
   mouse(types.leftMouseDown, point):setProperty(clickState, 1):post()
