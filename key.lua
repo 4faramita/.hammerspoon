@@ -41,7 +41,7 @@ Layer 2
 |-----------------------------------------------------------------------------------------|
 |        |     |     |     |     |     |     |     |     |     |     |     |     |        |
 |-----------------------------------------------------------------------------------------|
-|            |     |     |     |     |     |     |     |     |     |     |     |          |
+|         |     |     |     |     |     | HOME | PGDN | PGUP | END |     |     |          |
 |-----------------------------------------------------------------------------------------|
 |              |     |     |     |     |     |     |     |     |     |     |              |
 |-----------------------------------------------------------------------------------------|
@@ -290,10 +290,22 @@ eventtapWatcher = hs.eventtap.new({ types.keyDown, types.keyUp, types.flagsChang
     return true
   elseif isKey(nil, '', 'keyDown') and state.downDown then
     state.downCombo = true
+    if nil then
+    elseif isKey('h') then
+      press({}, 'home')
+    elseif isKey('j') then
+      press({}, 'pagedown')
+    elseif isKey('k') then
+      press({}, 'pageup')
+    elseif isKey('l') then
+      press({}, 'end')
+    else
+      return
+    end
     return true
   elseif isKey(nil, '', 'keyUp') and state.downDown and state.downCombo then
     return true
-  elseif char and rawChar and string.match(char, '%l+') and string.match(rawChar, '%u+') then
+  elseif char and rawChar and string.match(char, '%l+') and string.match(rawChar, '%u+') then -- 大写转小写
     return true, { key(flagsArray, char, eType == types.keyDown) }
   end
   if state.skipSpaceTimes and state.skipSpaceTimes > 0 then
