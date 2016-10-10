@@ -50,6 +50,6 @@ if conf.autoRestoreLayout then
   end):start()
 end
 
-expose = hs.expose.new(nil,{})
-hs.hotkey.bind('ctrl','tab', function()expose:toggleShow()end)
-hs.hotkey.bind('alt','tab', hs.hints.windowHints)
+-- expose = hs.expose.new(nil,{})
+-- hs.hotkey.bind('ctrl','tab', function()expose:toggleShow()end)
+-- hs.hotkey.bind('alt','tab', hs.hints.windowHints)
