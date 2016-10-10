@@ -18,6 +18,3 @@ require './layout'
 
 -- hyper
 require './hyper'
-
--- input
--- require './input'

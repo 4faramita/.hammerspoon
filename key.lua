@@ -244,11 +244,23 @@ eventtapWatcher = hs.eventtap.new({ types.keyDown, types.keyUp, types.flagsChang
     elseif isKey('c') then
       sys('MUTE')
     elseif isKey('v') then
-      sys('PREVIOUS')
+      runningApp('com.netease.163music', function()
+        press({'cmd'}, 'left')
+      end, function ()
+        sys('PREVIOUS')
+      end)
     elseif isKey('b') then
-      sys('PLAY')
+      runningApp('com.netease.163music', function()
+        press({}, 'space')
+      end, function ()
+        sys('PLAY')
+      end)
     elseif isKey('n') then
-      sys('NEXT')
+      runningApp('com.netease.163music', function()
+        press({'cmd'}, 'right')
+      end, function ()
+        sys('NEXT')
+      end)
     elseif isKey('a') then
       sys('BRIGHTNESS_DOWN')
     elseif isKey('s') then

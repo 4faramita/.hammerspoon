@@ -26,28 +26,20 @@ function AS (val)
   return hs.osascript.applescript(val)
 end
 function SH (val)
-  return AS('set result to do shell script "'..val..'"')
+  return hs.execute(val)
 end
 
 function getSystemPwd ()
-  local succeeded, result = SH('security find-generic-password -s hammerspoon -a system -w')
-  return result
+  return SH('security find-generic-password -s hammerspoon -a system -w')
 end
 
 -- delay
-function delay (cb, delay)
-  hs.timer.doAfter(delay, cb)
+function delay (...)
+  hs.timer.doAfter(...)
 end
 
 -- inspect
 inspect = hs.inspect
-
--- deepEqual
-function isEqual (a, b)
-  util.sortByKeys(a)
-  util.sortByKeys(b)
-  return inspect(a) == inspect(b)
-end
 
 -- debug
 function put (...)
@@ -64,4 +56,19 @@ function includes (list, item)
     end
   end
   return false
+end
+
+function runningApp (id, success, fail)
+  local app = hs.application.get(id)
+  if app then
+    app:activate()
+    delay(0.1, function ()
+      success()
+    end)
+    delay(0.2, function ()
+      app:hide()
+    end)
+  else
+    fail()
+  end
 end

@@ -34,18 +34,21 @@ function restoreLayout ()
     end
   end
 end
-caffeinateWatcher = hs.caffeinate.watcher.new(function(e)
-  -- 5, lock; 6, unlock;
-  -- sleep display: 3, 10; 4, 11
-  -- sleep: 3, 10, 0, 4, 11
-  -- put(hs.timer.localTime(), e)
-  if e == hs.caffeinate.watcher.screensDidUnlock then
-    restoreLayout()
-  end
-  if e == hs.caffeinate.watcher.screensDidSleep then
-    saveLayout()
-  end
-end):start()
+
+if conf.autoRestoreLayout then
+  caffeinateWatcher = hs.caffeinate.watcher.new(function(e)
+    -- 5, lock; 6, unlock;
+    -- sleep display: 3, 10; 4, 11
+    -- sleep: 3, 10, 0, 4, 11
+    -- put(hs.timer.localTime(), e)
+    if e == hs.caffeinate.watcher.screensDidUnlock then
+      restoreLayout()
+    end
+    if e == hs.caffeinate.watcher.screensDidSleep then
+      saveLayout()
+    end
+  end):start()
+end
 
 expose = hs.expose.new(nil,{})
 hs.hotkey.bind('ctrl','tab', function()expose:toggleShow()end)
