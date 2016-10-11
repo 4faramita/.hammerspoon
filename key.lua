@@ -271,8 +271,6 @@ eventtapWatcher = hs.eventtap.new({ types.keyDown, types.keyUp, types.flagsChang
       sys('ILLUMINATION_UP')
     elseif isKey('g') then
       sys('ILLUMINATION_TOGGLE')
-    elseif isKey('g') then
-      sys('ILLUMINATION_TOGGLE')
     elseif isKey('h') then
       press({'fn'}, 'left')
     elseif isKey('j') then
