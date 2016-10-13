@@ -1,5 +1,6 @@
 mouse = require 'mouse'
 util = require 'util'
+conf = require 'conf'
 layout = require 'layout'
 
 app =
@@ -16,9 +17,9 @@ app =
     app = hs.application.get id
     if app
       app\activate!
-      util.delay 0.1, ->
+      util.delay conf.appActiveTimeout, ->
         success!
-      util.delay 0.2, ->
+      util.delay conf.appHideTimeout, ->
         app\hide!
     else
       fail!

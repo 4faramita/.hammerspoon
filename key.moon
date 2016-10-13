@@ -1,4 +1,4 @@
--- 取 Apple 键盘和 60% 键盘想同的部分作为基础
+-- 取 Apple 键盘和 60% 键盘相同的部分作为基础
 -- ,-----------------------------------------------------------------------------------------.
 -- |  `  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  |   BSPC    |
 -- |-----------------------------------------------------------------------------------------|
@@ -12,7 +12,7 @@
 -- `-----------------------------------------------------------------------------------------'
 -- Layer 0(默认层)
 -- ,-----------------------------------------------------------------------------------------.
--- |     |     |     |     |     |     |     |     |     |     |     |     |     |           |
+-- |   |1/Layer1|2/Layer2|     |     |     |     |     |     |     |     |     |     |       |
 -- |-----------------------------------------------------------------------------------------|
 -- |        |     |     |     |     |     |     |     |     |     |     |     |     |        |
 -- |-----------------------------------------------------------------------------------------|
@@ -20,11 +20,11 @@
 -- |-----------------------------------------------------------------------------------------|
 -- |   F13/LSFT   |     |     |     |     |     |     |     |     |     |     |              |
 -- |-----------------------------------------------------------------------------------------|
--- |    | F12/Layer 1 |     |     |     SPACE/HYPER    |F19/HYPER-LSFT|    |DOWN/Layer 2|    |
+-- |    |F12/LCTL|F11/LALT|F10/LGUI|         SPACE/HYPER        |F9/HYPER-LSFT|    |    |    |
 -- `-----------------------------------------------------------------------------------------'
 -- Layer 1
 -- ,-----------------------------------------------------------------------------------------.
--- |     |  F1 |  F2 |  F3 |  F4 |  F5 |  F6 |  F7 |  F8 |  F9 | F10 | F11 | F12 |    Del    |
+-- |     |     |     |     |     |     |     |     |     |     |     |     |     |    Del    |
 -- |-----------------------------------------------------------------------------------------|
 -- |       |       |     |     |     |     |     |     |     |     |     |     |     |       |
 -- |-----------------------------------------------------------------------------------------|
@@ -53,6 +53,8 @@ conf = require 'conf'
 codes = hs.keycodes.map
 codes.leftShift = 56
 codes.leftCtrl = 59
+codes.leftAlt = 58
+codes.leftCmd = 55
 codes.rightCmd = 54
 {
   :new
@@ -111,7 +113,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.spaceDown and type == keyUp
     return true
 
-  -- RGUI -> F19/HYPER-LSFT
+  -- RGUI -> F9/HYPER-LSFT
   elseif code == codes.rightCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
     state.rightCmdDown = true
     return true
@@ -122,8 +124,8 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       return true
     else
       return true, {
-        key mods, codes.f19, true
-        key mods, codes.f19, false
+        key mods, codes.f9, true
+        key mods, codes.f9, false
       }
   elseif state.rightCmdDown and type == keyDown
     state.rightCmdCombo = true
@@ -161,32 +163,68 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- LSFT -> F13/LSFT
   elseif code == codes.leftShift and _.str(mods) == '{"shift"}' and type == flagsChanged
-    state.leftShiftDown = true
+    state.leftShiftDown = hs.timer.secondsSinceEpoch!
     return true
   elseif code == codes.leftShift and _.str(mods) == '{}' and type == flagsChanged
-    if state.leftShiftDown
+    if state.leftShiftDown and hs.timer.secondsSinceEpoch! < state.leftShiftDown + conf.oneTapTimeout
       state.leftShiftDown = false
       return true, {
         key mods, codes.f13, true
         key mods, codes.f13, false
       }
 
-  -- DOWN -> DOWN/Layer 2
-  elseif code == codes.down and type == keyDown
-    state.downDown = true
+  -- LCTL -> F12/LCTL
+  elseif code == codes.leftCtrl and _.str(mods) == '{"ctrl"}' and type == flagsChanged
+    state.leftCtrlDown = hs.timer.secondsSinceEpoch!
     return true
-  elseif code == codes.down and type == keyUp
-    state.downDown = false
-    if state.downCombo
-      state.downCombo = false
+  elseif code == codes.leftCtrl and _.str(mods) == '{}' and type == flagsChanged
+    if state.leftCtrlDown and hs.timer.secondsSinceEpoch! < state.leftCtrlDown + conf.oneTapTimeout
+      state.leftCtrlDown = false
+      return true, {
+        key mods, codes.f12, true
+        key mods, codes.f12, false
+      }
+
+  -- LALT -> F11/LALT
+  elseif code == codes.leftAlt and _.str(mods) == '{"alt"}' and type == flagsChanged
+    state.leftAltDown = hs.timer.secondsSinceEpoch!
+    return true
+  elseif code == codes.leftAlt and _.str(mods) == '{}' and type == flagsChanged
+    if state.leftAltDown and hs.timer.secondsSinceEpoch! < state.leftAltDown + conf.oneTapTimeout
+      state.leftAltDown = false
+      return true, {
+        key mods, codes.f11, true
+        key mods, codes.f11, false
+      }
+
+  -- LGUI -> F10/LGUI
+  elseif code == codes.leftCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
+    state.leftCmdDown = hs.timer.secondsSinceEpoch!
+    return true
+  elseif code == codes.leftCmd and _.str(mods) == '{}' and type == flagsChanged
+    if state.leftCmdDown and hs.timer.secondsSinceEpoch! < state.leftCmdDown + conf.oneTapTimeout
+      state.leftCmdDown = false
+      return true, {
+        key mods, codes.f10, true
+        key mods, codes.f10, false
+      }
+
+  -- 2 -> 2/Layer 2
+  elseif code == codes['2'] and type == keyDown
+    state.twoDown = true
+    return true
+  elseif code == codes['2'] and type == keyUp
+    state.twoDown = false
+    if state.twoCombo
+      state.twoCombo = false
       return true
     else
       return true, {
         key mods, code, true
         key mods, code, false
       }
-  elseif state.downDown and type == keyDown
-    state.downCombo = true
+  elseif state.twoDown and type == keyDown
+    state.twoCombo = true
     layer2 =
       h: 'home'
       j: 'pagedown'
@@ -197,25 +235,25 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       key mods, code, true
       key mods, code, false
     }
-  elseif state.downDown and type == keyUp
+  elseif state.twoDown and type == keyUp
     return true
 
-  -- LCTL -> F12/Layer 1
-  elseif code == codes.leftCtrl and _.str(mods) == '{"ctrl"}' and type == flagsChanged
-    state.leftCtrlDown = true
+  -- 1 -> 1/Layer 1
+  elseif code == codes['1'] and type == keyDown
+    state.oneDown = true
     return true
-  elseif code == codes.leftCtrl and _.str(mods) == '{}' and type == flagsChanged
-    state.leftCtrlDown = false
-    if state.leftCtrlCombo
-      state.leftCtrlCombo = false
+  elseif code == codes['1'] and type == keyUp
+    state.oneDown = false
+    if state.oneCombo
+      state.oneCombo = false
       return true
     else
       return true, {
-        key mods, codes.f12, true
-        key mods, codes.f12, false
+        key mods, code, true
+        key mods, code, false
       }
-  elseif state.leftCtrlDown and type == keyDown
-    state.leftCtrlCombo = true
+  elseif state.oneDown and type == keyDown
+    state.oneCombo = true
     layer1 =
       sys:
         z: 'SOUND_DOWN'
@@ -258,16 +296,22 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       app.running 'com.netease.163music',
         () -> press({'cmd'}, 'left'),
         () -> sys 'PREVIOUS'
+      return true
     elseif code == codes.b
       app.running 'com.netease.163music',
         () -> press({}, 'space'),
         () -> sys 'PLAY'
+      return true
     elseif code == codes.n
       app.running 'com.netease.163music',
         () -> press({'cmd'}, 'right'),
         () -> sys 'NEXT'
-  elseif state.leftCtrlDown and type == keyUp
+      return true
+  elseif state.oneDown and type == keyUp
     return true
 
+  state.leftCmdDown = false
+  state.leftAltDown = false
+  state.leftCtrlDown = false
   state.leftShiftDown = false
 )\start!
