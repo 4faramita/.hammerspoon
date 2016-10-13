@@ -12,7 +12,8 @@ conf =
     productID: {}
     productName: { 'GH60' }
   enabledDevice: { 43, 40 }
-  hyper: 'ctrl-alt-cmd'
+  hyper0: {'cmd', 'alt', 'ctrl'}
+  hyper1: {'cmd', 'alt', 'ctrl', 'shift'}
   notification:
     x: 80
     y: 80

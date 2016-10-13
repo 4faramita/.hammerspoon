@@ -20,7 +20,7 @@
 -- |-----------------------------------------------------------------------------------------|
 -- |   F13/LSFT   |     |     |     |     |     |     |     |     |     |     |              |
 -- |-----------------------------------------------------------------------------------------|
--- |    |F12/LCTL|F11/LALT|F10/LGUI|         SPACE/HYPER        |F9/HYPER-LSFT|    |    |    |
+-- |    |F12/LCTL|F11/LALT|F10/LGUI|          SPACE/HYPER0          |F9/HYPER1|    |    |    |
 -- `-----------------------------------------------------------------------------------------'
 -- Layer 1
 -- ,-----------------------------------------------------------------------------------------.
@@ -89,7 +89,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   mods = _.keys flags
   print type, code, _.str(mods)
 
-  -- SPACE -> SPACE/HYPER
+  -- SPACE -> SPACE/HYPER0
   if code == codes.space and type == keyDown
     state.spaceDown = true
     return true
@@ -105,7 +105,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       }
   elseif state.spaceDown and type == keyDown
     state.spaceCombo = true
-    mods = _.union mods, {'cmd', 'alt', 'ctrl'}
+    mods = _.union mods, conf.hyper0
     return true, {
       key mods, code, true
       key mods, code, false
@@ -113,7 +113,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.spaceDown and type == keyUp
     return true
 
-  -- RGUI -> F9/HYPER-LSFT
+  -- RGUI -> F9/HYPER1
   elseif code == codes.rightCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
     state.rightCmdDown = hs.timer.secondsSinceEpoch!
     return true
@@ -130,7 +130,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       }
   elseif state.rightCmdDown and type == keyDown
     state.rightCmdCombo = true
-    mods = _.union mods, {'cmd', 'alt', 'ctrl', 'shift'}
+    mods = _.union mods, conf.hyper1
     return true, {
       key mods, code, true
       key mods, code, false

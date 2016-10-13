@@ -1,3 +1,4 @@
+_ = require 'lodash'
 conf = require 'conf'
 mouse = require 'mouse'
 layout = require 'layout'
@@ -44,7 +45,7 @@ list =
   escape: ''
 for k, v in pairs list
   if type(v) == 'function'
-    bind conf.hyper, k, v
+    bind conf.hyper0, k, v
   elseif #v > 0
-    bind conf.hyper, k, app.toggleByBundleID(v)
-    bind "#{conf.hyper}-shift", k, app.toggleByBundleID(v, true)
+    bind conf.hyper0, k, app.toggleByBundleID(v)
+    bind conf.hyper1, k, app.toggleByBundleID(v, true)
