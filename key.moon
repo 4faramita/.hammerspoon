@@ -115,14 +115,15 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- RGUI -> F9/HYPER-LSFT
   elseif code == codes.rightCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
-    state.rightCmdDown = true
+    state.rightCmdDown = hs.timer.secondsSinceEpoch!
     return true
   elseif code == codes.rightCmd and _.str(mods) == '{}' and type == flagsChanged
-    state.rightCmdDown = false
     if state.rightCmdCombo
+      state.rightCmdDown = false
       state.rightCmdCombo = false
       return true
-    else
+    elseif hs.timer.secondsSinceEpoch! < state.rightCmdDown + conf.oneTapTimeout
+      state.rightCmdDown = false
       return true, {
         key mods, codes.f9, true
         key mods, codes.f9, false
