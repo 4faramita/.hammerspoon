@@ -59,7 +59,6 @@ codes.rightCmd = 54
 {
   :new
   keyStroke: press
-  keyStrokes: text
   event:
     types:
       :keyDown
@@ -73,7 +72,7 @@ codes.rightCmd = 54
 
 sys = (name, mods={}) ->
   sysEvent(name, true)\setFlags(mods)\post!
-  util.delay 0.1, ->
+  util.delay conf.sysEventTimeout, ->
     sysEvent(name, false)\setFlags(mods)\post!
 
 key = (mods, key, isdown) ->
@@ -295,18 +294,18 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       return true
     elseif code == codes.v
       app.running 'com.netease.163music',
-        () -> press({'cmd'}, 'left'),
-        () -> sys 'PREVIOUS'
+        -> press({'cmd'}, 'left'),
+        -> sys 'PREVIOUS'
       return true
     elseif code == codes.b
       app.running 'com.netease.163music',
-        () -> press({}, 'space'),
-        () -> sys 'PLAY'
+        -> press({}, 'space'),
+        -> sys 'PLAY'
       return true
     elseif code == codes.n
       app.running 'com.netease.163music',
-        () -> press({'cmd'}, 'right'),
-        () -> sys 'NEXT'
+        -> press({'cmd'}, 'right'),
+        -> sys 'NEXT'
       return true
   elseif state.oneDown and type == keyUp
     return true

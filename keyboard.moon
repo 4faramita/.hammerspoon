@@ -13,7 +13,7 @@ checkKeyboard = ->
   for k, v in pairs(hs.usb.attachedDevices())
     if isExternalDevice v
       return toggleInternalKeyboard false
-  toggleInternalKeyboard true, true
+  toggleInternalKeyboard true
 
 
 export usbWatcher = hs.usb.watcher.new((e)->

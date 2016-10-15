@@ -32,6 +32,7 @@ list =
   y: 'com.agilebits.onepassword-osx'
   z: ''
   ['0']: 'com.torusknot.SourceTreeNotMAS'
+  -- ['0']: 'com.axosoft.gitkraken'
   ['1']: 'com.googlecode.iterm2'
   -- ['1']: 'co.zeit.hyperterm'
   ['2']: 'com.google.Chrome'

@@ -8,6 +8,7 @@ conf =
     mouse: true
     hyper: true
     expose: true
+    text: true
   externalDevice:
     productID: {}
     productName: { 'GH60' }
@@ -20,4 +21,10 @@ conf =
   oneTapTimeout: 0.2
   appActiveTimeout: 0.1
   appHideTimeout: 0.2
+  sysEventTimeout: 0.15
+  textHotKey: 'f9'
+  textTimeout: 0.15
+  text:
+    mail: { 'g', 'mail' }
+    pwd: { 'p', 'pwd', true }
 conf
