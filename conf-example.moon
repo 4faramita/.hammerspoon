@@ -24,6 +24,7 @@ conf =
   sysEventTimeout: 0.15
   textHotKey: 'f9'
   textTimeout: 0.15
+  textAutoExit: 1
   text:
     mail: { 'g', 'mail' }
     pwd: { 'p', 'pwd', true }
