@@ -7,9 +7,17 @@ util = require 'util'
     newKeyEvent: keyEvent
 } = hs.eventtap
 
-m = hs.hotkey.modal.new '', 'f20'
+m = hs.hotkey.modal.new '', conf.textHotKey
 exit = ->
   m\exit!
+m.entered = =>
+  hs.alert.show '¯\\_(ツ)_/¯ enter', 0.5
+  util.delay conf.textAutoExit, ->
+    unless m.block
+      hs.alert.show '¯\\_(ツ)_/¯ exit', 0.5
+    exit!
+
+-- m.exited = =>
 
 m\bind '', 'escape', exit
 
@@ -22,11 +30,9 @@ for k, { key, text, enter } in pairs conf.text
         press {}, 'return' if enter,
     exit
 
-hs.hotkey.bind '', conf.textHotKey, nil,
+m\bind '', conf.textHotKey, 'Clipboard',
   ->
-    hs.alert '¯\\_(ツ)_/¯ enter'
-    m\enter!
-    util.delay conf.textAutoExit, ->
-      unless m.block
-        hs.alert '¯\\_(ツ)_/¯ exit'
-      m\exit!
+    m.block = true
+    util.delay conf.textTimeout, ->
+      send hs.pasteboard.getContents!,
+  exit

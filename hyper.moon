@@ -8,7 +8,7 @@ list =
   a: 'com.github.atom'
   b: 'com.tapbots.TweetbotMac'
   c: 'com.apple.iCal'
-  d: ''
+  d: 'com.kapeli.dashdoc'
   e: 'com.bohemiancoding.sketch3'
   f: 'com.apple.finder'
   g: ''
@@ -41,7 +41,7 @@ list =
   ['\\']: ''
   ['-']: ''
   ['=']: ''
-  ['`']: ''
+  ['`']: -> hs.openConsole true
   tab: layout\screen
   escape: ''
 for k, v in pairs list
