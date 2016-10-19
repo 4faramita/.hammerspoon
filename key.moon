@@ -12,13 +12,13 @@
 -- `-----------------------------------------------------------------------------------------'
 -- Layer 0(默认层)
 -- ,-----------------------------------------------------------------------------------------.
--- |   |1/Layer1|2/Layer2|     |     |     |     |     |     |     |     |     |     |       |
+-- |  `/L2   |     |     |     |     |     |     |     |     |     |     |     |     |       |
 -- |-----------------------------------------------------------------------------------------|
--- |        |     |     |     |     |     |     |     |     |     |     |     |     |        |
+-- | TAB/L1 |     |     |     |     |     |     |     |     |     |     |     |     |        |
 -- |-----------------------------------------------------------------------------------------|
 -- |   ESC/LCTL  |     |     |     |     |     |     |     |     |     |     |     |         |
 -- |-----------------------------------------------------------------------------------------|
--- |   F13/LSFT   |     |     |     |     |     |     |     |     |     |     |              |
+-- |   F17/LSFT   |     |     |     |     |     |     |     |     |     |     |              |
 -- |-----------------------------------------------------------------------------------------|
 -- |    |F12/LCTL|F11/LALT|F10/LGUI|          SPACE/HYPER0          |F9/HYPER1|    |    |    |
 -- `-----------------------------------------------------------------------------------------'
@@ -26,11 +26,11 @@
 -- ,-----------------------------------------------------------------------------------------.
 -- |     |     |     |     |     |     |     |     |     |     |     |     |     |    Del    |
 -- |-----------------------------------------------------------------------------------------|
--- |       |       |     |     |     |     |     |     |     |     |     |     |     |       |
+-- |      |  V-  |  V+  | MUTE |     |     |     |     |     |     |     |     |     |       |
 -- |-----------------------------------------------------------------------------------------|
--- |            |  B-  |  B+  | KB- | KB+ | KBT | LEFT| DOWN | UP | RGHT |     |     |       |
+-- |         |SLCK|PAUS|BL_DEC|BL_INC|BL_TOGG|LEFT| DOWN | UP | RGHT |     |     |    |      |
 -- |-----------------------------------------------------------------------------------------|
--- |             |  V-  |  V+  | MUTE | MPRV | MPLY | MNXT |                                 |
+-- |     |     | MPRV | MPLY | MNXT |     |     |     |     |     |     |     |         |    |
 -- |-----------------------------------------------------------------------------------------|
 -- |                                                                                         |
 -- `-----------------------------------------------------------------------------------------'
@@ -114,14 +114,14 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- RGUI -> F9/HYPER1
   elseif code == codes.rightCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
-    state.rightCmdDown = hs.timer.secondsSinceEpoch!
+    state.rightCmdDown = util.now!
     return true
   elseif code == codes.rightCmd and _.str(mods) == '{}' and type == flagsChanged
     if state.rightCmdCombo
       state.rightCmdDown = false
       state.rightCmdCombo = false
       return true
-    elseif hs.timer.secondsSinceEpoch! < state.rightCmdDown + conf.oneTapTimeout
+    elseif util.now! < state.rightCmdDown + conf.oneTapTimeout
       state.rightCmdDown = false
       return true, {
         key mods, codes.f9, true
@@ -161,24 +161,24 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.escapeDown and type == keyUp
     return true
 
-  -- LSFT -> F13/LSFT
+  -- LSFT -> F17/LSFT
   elseif code == codes.leftShift and _.str(mods) == '{"shift"}' and type == flagsChanged
-    state.leftShiftDown = hs.timer.secondsSinceEpoch!
+    state.leftShiftDown = util.now!
     return true
   elseif code == codes.leftShift and _.str(mods) == '{}' and type == flagsChanged
-    if state.leftShiftDown and hs.timer.secondsSinceEpoch! < state.leftShiftDown + conf.oneTapTimeout
+    if state.leftShiftDown and util.now! < state.leftShiftDown + conf.oneTapTimeout
       state.leftShiftDown = false
       return true, {
-        key mods, codes.f13, true
-        key mods, codes.f13, false
+        key mods, codes.f17, true
+        key mods, codes.f17, false
       }
 
   -- LCTL -> F12/LCTL
   elseif code == codes.leftCtrl and _.str(mods) == '{"ctrl"}' and type == flagsChanged
-    state.leftCtrlDown = hs.timer.secondsSinceEpoch!
+    state.leftCtrlDown = util.now!
     return true
   elseif code == codes.leftCtrl and _.str(mods) == '{}' and type == flagsChanged
-    if state.leftCtrlDown and hs.timer.secondsSinceEpoch! < state.leftCtrlDown + conf.oneTapTimeout
+    if state.leftCtrlDown and util.now! < state.leftCtrlDown + conf.oneTapTimeout
       state.leftCtrlDown = false
       return true, {
         key mods, codes.f12, true
@@ -187,10 +187,10 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- LALT -> F11/LALT
   elseif code == codes.leftAlt and _.str(mods) == '{"alt"}' and type == flagsChanged
-    state.leftAltDown = hs.timer.secondsSinceEpoch!
+    state.leftAltDown = util.now!
     return true
   elseif code == codes.leftAlt and _.str(mods) == '{}' and type == flagsChanged
-    if state.leftAltDown and hs.timer.secondsSinceEpoch! < state.leftAltDown + conf.oneTapTimeout
+    if state.leftAltDown and util.now! < state.leftAltDown + conf.oneTapTimeout
       state.leftAltDown = false
       return true, {
         key mods, codes.f11, true
@@ -199,21 +199,21 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- LGUI -> F10/LGUI
   elseif code == codes.leftCmd and _.str(mods) == '{"cmd"}' and type == flagsChanged
-    state.leftCmdDown = hs.timer.secondsSinceEpoch!
+    state.leftCmdDown = util.now!
     return true
   elseif code == codes.leftCmd and _.str(mods) == '{}' and type == flagsChanged
-    if state.leftCmdDown and hs.timer.secondsSinceEpoch! < state.leftCmdDown + conf.oneTapTimeout
+    if state.leftCmdDown and util.now! < state.leftCmdDown + conf.oneTapTimeout
       state.leftCmdDown = false
       return true, {
         key mods, codes.f10, true
         key mods, codes.f10, false
       }
 
-  -- 2 -> 2/Layer 2
-  elseif code == codes['2'] and type == keyDown
+  -- ` -> `/Layer 2
+  elseif code == codes['`'] and type == keyDown
     state.twoDown = true
     return true
-  elseif code == codes['2'] and type == keyUp
+  elseif code == codes['`'] and type == keyUp
     state.twoDown = false
     if state.twoCombo
       state.twoCombo = false
@@ -238,11 +238,11 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.twoDown and type == keyUp
     return true
 
-  -- 1 -> 1/Layer 1
-  elseif code == codes['1'] and type == keyDown
+  -- TAB -> TAB/Layer 1
+  elseif code == codes['tab'] and type == keyDown
     state.oneDown = true
     return true
-  elseif code == codes['1'] and type == keyUp
+  elseif code == codes['tab'] and type == keyUp
     state.oneDown = false
     if state.oneCombo
       state.oneCombo = false
@@ -256,9 +256,9 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
     state.oneCombo = true
     layer1 =
       sys:
-        z: 'SOUND_DOWN'
-        x: 'SOUND_UP'
-        c: 'MUTE'
+        q: 'SOUND_DOWN'
+        w: 'SOUND_UP'
+        e: 'MUTE'
         a: 'BRIGHTNESS_DOWN'
         s: 'BRIGHTNESS_UP'
         d: 'ILLUMINATION_DOWN'
@@ -292,17 +292,17 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
     elseif layerSys
       sys layerSys
       return true
-    elseif code == codes.v
+    elseif code == codes.z
       app.running 'com.netease.163music',
         -> press({'cmd'}, 'left'),
         -> sys 'PREVIOUS'
       return true
-    elseif code == codes.b
+    elseif code == codes.x
       app.running 'com.netease.163music',
         -> press({}, 'space'),
         -> sys 'PLAY'
       return true
-    elseif code == codes.n
+    elseif code == codes.c
       app.running 'com.netease.163music',
         -> press({'cmd'}, 'right'),
         -> sys 'NEXT'

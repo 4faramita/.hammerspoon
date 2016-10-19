@@ -14,4 +14,6 @@ util =
     hs.reload!
   delay: (...) ->
     hs.timer.doAfter ...
+  now: ->
+    hs.timer.secondsSinceEpoch!
 util
