@@ -12,7 +12,8 @@ conf =
   externalDevice:
     productID: {}
     productName: { 'GH60' }
-  enabledDevice: { 43, 40 }
+  enabledDevice: { 43 }
+  disableDevice: { 43 }
   hyper0: {'cmd', 'alt', 'ctrl'}
   hyper1: {'cmd', 'alt', 'ctrl', 'shift'}
   notification:

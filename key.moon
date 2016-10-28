@@ -50,6 +50,7 @@ _ = require 'lodash'
 app = require 'app'
 util = require 'util'
 conf = require 'conf'
+hasExternalDevice = require 'keyboard'
 codes = hs.keycodes.map
 codes.leftShift = 56
 codes.leftCtrl = 59
@@ -84,6 +85,7 @@ state = {}
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
   return unless keyboardType and _.includes conf.enabledDevice, keyboardType
+  return true if hasExternalDevice! and keyboardType and _.includes conf.disableDevice, keyboardType
   type, code, flags = e\getType!, e\getKeyCode!, e\getFlags!
   mods = _.keys flags
   print type, code, _.str(mods)
@@ -91,17 +93,23 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   -- SPACE -> SPACE/HYPER0
   if code == codes.space and type == keyDown
     state.spaceDown = true
+    state.spaceDownTime = util.now! unless state.spaceDownTime
     return true
   elseif code == codes.space and type == keyUp
     state.spaceDown = false
     if state.spaceCombo
       state.spaceCombo = false
       return true
-    else
+    if not state.spaceCombo and state.spaceDownTime and (util.now! < state.spaceDownTime + conf.oneTapTimeout)
+      state.spaceDownTime = nil
       return true, {
         key mods, code, true
         key mods, code, false
       }
+    else
+      state.spaceDownTime = nil
+      state.spaceCombo = false
+      return true
   elseif state.spaceDown and type == keyDown
     state.spaceCombo = true
     mods = _.union mods, conf.hyper0

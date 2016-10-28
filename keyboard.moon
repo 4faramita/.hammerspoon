@@ -12,8 +12,8 @@ toggleInternalKeyboard = (load, slient) ->
 checkKeyboard = ->
   for k, v in pairs(hs.usb.attachedDevices())
     if isExternalDevice v
-      return toggleInternalKeyboard false
-  toggleInternalKeyboard true
+      return toggleInternalKeyboard false, true
+  toggleInternalKeyboard true, true
 
 
 export usbWatcher = hs.usb.watcher.new((e)->
@@ -29,3 +29,11 @@ export caffeinateWatcher = hs.caffeinate.watcher.new((e) ->
 )\start!
 
 checkKeyboard!
+
+hasExternalDevice = ->
+  for k, v in pairs(hs.usb.attachedDevices())
+    if isExternalDevice v
+      return true
+  return
+
+hasExternalDevice
