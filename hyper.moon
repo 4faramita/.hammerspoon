@@ -29,7 +29,7 @@ list =
   v: ''
   w: 'com.tencent.xinWeChat'
   x: 'com.readdle.PDFExpert-Mac'
-  y: 'com.agilebits.onepassword-osx'
+  y: 'com.agilebits.onepassword4'
   z: ''
   ['0']: 'com.torusknot.SourceTreeNotMAS'
   -- ['0']: 'com.axosoft.gitkraken'
@@ -38,12 +38,13 @@ list =
   ['2']: 'com.google.Chrome'
   [',']: 'com.apple.systempreferences'
   ['.']: mouse.clickNotification
-  ['\\']: ''
+  ['\\']: -> hs.openConsole true
   ['-']: ''
   ['=']: ''
-  ['`']: -> hs.openConsole true
   tab: layout\screen
   escape: ''
+  up: layout\upHalf
+  down: layout\downHalf
 for k, v in pairs list
   if type(v) == 'function'
     bind conf.hyper0, k, v

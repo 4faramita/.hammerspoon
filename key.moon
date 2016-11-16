@@ -80,7 +80,9 @@ key = (mods, key, isdown) ->
   key = if _.isNumber key then key else codes[key]
   keyEvent(mods, '', isdown)\setKeyCode key
 
-state = {}
+state = {
+  startTime: util.now!
+}
 
 export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   keyboardType = e\getProperty keyboardEventKeyboardType
@@ -88,10 +90,12 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   return true if hasExternalDevice! and keyboardType and _.includes conf.disableDevice, keyboardType
   type, code, flags = e\getType!, e\getKeyCode!, e\getFlags!
   mods = _.keys flags
-  print type, code, _.str(mods)
+  print math.floor((util.now!-state.startTime+0.5)*100)/100, type, code, _.str(mods)
 
+  if _.includes({codes.space, codes['`'], codes['tab']}, code) and _.str(mods) != '{}'
+    return
   -- SPACE -> SPACE/HYPER0
-  if code == codes.space and type == keyDown
+  elseif code == codes.space and type == keyDown
     state.spaceDown = true
     state.spaceDownTime = util.now! unless state.spaceDownTime
     return true

@@ -1,4 +1,5 @@
 hs.window.animationDuration = 0
+hs.window.setFrameCorrectness = false
 
 layout =
   frontmost: ->
@@ -11,6 +12,10 @@ layout =
     @frontmost!\maximize!
   center: =>
     @frontmost!\move('[25,25,75,75]')
+  upHalf: =>
+    @frontmost!\move('[0,0,100,50]')
+  downHalf: =>
+    @frontmost!\move('[0,50,100,100]')
   screen: =>
     win = @frontmost!
     win\moveToScreen win\screen!\next!, true, true
