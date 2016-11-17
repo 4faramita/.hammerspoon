@@ -92,10 +92,8 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   mods = _.keys flags
   print math.floor((util.now!-state.startTime+0.5)*100)/100, type, code, _.str(mods)
 
-  if _.includes({codes.space, codes['`'], codes['tab']}, code) and _.str(mods) != '{}'
-    return
   -- SPACE -> SPACE/HYPER0
-  elseif code == codes.space and type == keyDown
+  if code == codes.space and type == keyDown
     state.spaceDown = true
     state.spaceDownTime = util.now! unless state.spaceDownTime
     return true
