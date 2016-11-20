@@ -12,9 +12,9 @@
 -- `-----------------------------------------------------------------------------------------'
 -- Layer 0(默认层)
 -- ,-----------------------------------------------------------------------------------------.
--- |  `/L2   |     |     |     |     |     |     |     |     |     |     |     |     |       |
+-- |  `  |  1/L1 |  2/L2 |     |     |     |     |     |     |     |     |     |     |       |
 -- |-----------------------------------------------------------------------------------------|
--- | TAB/L1 |     |     |     |     |     |     |     |     |     |     |     |     |        |
+-- |   TAB  |     |     |     |     |     |     |     |     |     |     |     |     |        |
 -- |-----------------------------------------------------------------------------------------|
 -- |   ESC/LCTL  |     |     |     |     |     |     |     |     |     |     |     |         |
 -- |-----------------------------------------------------------------------------------------|
@@ -219,11 +219,11 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         key mods, codes.f10, false
       }
 
-  -- ` -> `/Layer 2
-  elseif code == codes['`'] and type == keyDown
+  -- 2 -> 2/Layer 2
+  elseif code == codes['2'] and type == keyDown
     state.twoDown = true
     return true
-  elseif code == codes['`'] and type == keyUp
+  elseif code == codes['2'] and type == keyUp
     state.twoDown = false
     if state.twoCombo
       state.twoCombo = false
@@ -248,11 +248,11 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif state.twoDown and type == keyUp
     return true
 
-  -- TAB -> TAB/Layer 1
-  elseif code == codes['tab'] and type == keyDown
+  -- 1 -> 1/Layer 1
+  elseif code == codes['1'] and type == keyDown
     state.oneDown = true
     return true
-  elseif code == codes['tab'] and type == keyUp
+  elseif code == codes['1'] and type == keyUp
     state.oneDown = false
     if state.oneCombo
       state.oneCombo = false
@@ -319,7 +319,6 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
       return true
   elseif state.oneDown and type == keyUp
     return true
-
   state.leftCmdDown = false
   state.leftAltDown = false
   state.leftCtrlDown = false
