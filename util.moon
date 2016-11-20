@@ -2,7 +2,7 @@ conf = require 'conf'
 _ = require 'lodash'
 
 util =
-  notify: (subTitle, text) =>
+  notify: (subTitle, text) ->
     unless text
       text = subTitle
       subTitle = ''
@@ -16,5 +16,5 @@ util =
     hs.timer.doAfter ...
   now: ->
     hs.timer.secondsSinceEpoch!
-    
+
 util
