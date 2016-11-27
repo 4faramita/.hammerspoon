@@ -100,6 +100,7 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
   elseif code == codes.space and type == keyUp
     state.spaceDown = false
     if state.spaceCombo
+      state.spaceDownTime = nil
       state.spaceCombo = false
       return true
     if not state.spaceCombo and state.spaceDownTime and (util.now! < state.spaceDownTime + conf.oneTapTimeout)
