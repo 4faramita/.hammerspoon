@@ -8,14 +8,10 @@ _ = require 'lodash'
     newKeyEvent: keyEvent
 } = hs.eventtap
 
-conf = require 'conf'
-util = require 'util'
-_ = require 'lodash'
-
 state = {}
 
 hs.application.watcher.new((name, event, app)->{
-  _.print 1, name, event, app
+  -- _.print name, event, app
   if name=='SecurityAgent'
     if event == 5
       state.inSecurityAgent = true
