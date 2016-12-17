@@ -2,7 +2,7 @@ conf = require 'conf'
 _ = require 'lodash'
 
 util =
-  notify: (subTitle, text) ->
+  notify: (subTitle, text) =>
     unless text
       text = subTitle
       subTitle = ''

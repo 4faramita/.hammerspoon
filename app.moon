@@ -13,14 +13,17 @@ app =
         hs.application.launchOrFocusByBundleID id
         mouse.frontmost!
         layout\max! if max
-  running: (id, success, fail) ->
+  running: (id, success, fail, activate) ->
     app = hs.application.get id
     if app
-      app\activate!
-      util.delay conf.appActiveTimeout, ->
+      if activate
+        app\activate!
+        util.delay conf.appActiveTimeout, ->
+          success!
+        util.delay conf.appHideTimeout, ->
+          app\hide!
+      else
         success!
-      util.delay conf.appHideTimeout, ->
-        app\hide!
     else
       fail!
 app
