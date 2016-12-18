@@ -20,7 +20,7 @@ conf =
   appActiveTimeout: 0.1
   appHideTimeout: 0.2
   sysEventTimeout: 0.15
-  securityAgentWhiteList: {'Finder'}
+  securityAgentWhiteList: {'Finder', '安装器'}
   securityAgentWhiteListReturn: {'系统偏好设置'}
 
 conf

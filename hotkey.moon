@@ -12,9 +12,9 @@ lcagList =
   d: 'com.eusoft.eudic'
   e: 'com.bohemiancoding.sketch3'
   f: 'com.apple.finder'
-  g: ''
+  g: 'com.google.Chrome'
   h: layout\leftHalf
-  i: ''
+  i: 'com.googlecode.iterm2'
   j: layout\center
   k: layout\max
   l: layout\rightHalf
@@ -32,9 +32,9 @@ lcagList =
   x: 'com.readdle.PDFExpert-Mac'
   y: 'com.agilebits.onepassword4'
   z: ''
-  ['0']: 'com.torusknot.SourceTreeNotMAS'
-  ['1']: 'com.googlecode.iterm2'
-  ['2']: 'com.google.Chrome'
+  ['0']: ''
+  ['1']: ''
+  ['2']: ''
   [',']: 'com.apple.systempreferences'
   ['/']: -> hs.openConsole true
   [';']: mouse\clickNotificationUp
