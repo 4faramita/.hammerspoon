@@ -1,9 +1,11 @@
 conf = require 'conf'
+_ = require 'moses'
 mouse = require 'mouse'
 layout = require 'layout'
 util = require 'util'
 app = require 'app'
 bind = hs.hotkey.bind
+apps = {}
 lcagList =
   a: 'com.github.atom'
   b: 'com.tapbots.TweetbotMac'
@@ -47,3 +49,18 @@ for k, v in pairs lcagList
     bind conf.lcag, k, v
   elseif #v > 0
     bind conf.lcag, k, app.toggleByBundleID(v)
+    _.push apps, v
+
+_.push apps, 'com.apple.notificationcenterui'
+
+hs.hotkey.bind('', 'f9', nil, () ->
+  wins = {}
+  items = _.each hs.application.runningApplications!, (k, v) ->
+    name = v\name!
+    id = v\bundleID!
+    win = v\allWindows!
+    if #win > 0 and not _.include(apps, id)
+      _.each win, (k, v) ->
+        _.push wins, v
+  -- print hs.inspect(wins)
+  hs.hints.windowHints(wins, nil, true))
