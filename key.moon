@@ -40,6 +40,8 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
 
   -- SPACE -> SPACE/LCAG
   if code == codes.space
+    unless _.same(mods, {})
+      return false
     if type == keyDown
       state.spaceDown = true
       state.spaceDownTime = util.now! unless state.spaceDownTime
@@ -225,10 +227,10 @@ export eventtapWatcher = new({ keyDown, keyUp, flagsChanged }, (e) ->
         ['\\']: { {}, 'f19' }
         e: { {'cmd'}, 'f19' }
         r: { {'shift'}, 'f19' }
-        z: { {'alt'}, 'f19' }
-        x: { {'ctrl'}, 'f19' }
-        c: { {'cmd', 'ctrl'}, 'f19' }
-        v: { {'cmd', 'alt'}, 'f19' }
+        z: { {'cmd', 'shift'}, '3' }
+        x: { {'cmd', 'shift', 'ctrl'}, '3' }
+        c: { {'cmd', 'shift'}, '4' }
+        v: { {'cmd', 'shift', 'ctrl'}, '4' }
     layerKey = layer1.key[codes[code]]
     layerSys = layer1.sys[codes[code]]
     layerMod = layer1.mod[codes[code]]
