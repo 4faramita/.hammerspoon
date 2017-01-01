@@ -1,4 +1,3 @@
-_ = require 'lodash'
 conf = require 'conf'
 mouse = require 'mouse'
 layout = require 'layout'
@@ -38,7 +37,7 @@ lcagList =
   [',']: 'com.apple.systempreferences'
   ['/']: -> hs.openConsole true
   [';']: mouse\clickNotificationUp
-  ["'"]: mouse\clickNotificationDown
+  ['\'']: mouse\clickNotificationDown
   tab: layout\screen
   escape: ''
   up: layout\upHalf

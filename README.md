@@ -9,5 +9,5 @@ cp conf-example.moon conf.moon
 brew tap homebrew/versions
 brew install homebrew/versions/lua53
 luarocks-5.3 install moonscript
-luarocks-5.3 install lodash
+luarocks-5.3 install moses
 ```

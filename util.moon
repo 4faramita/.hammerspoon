@@ -1,5 +1,4 @@
 conf = require 'conf'
-_ = require 'lodash'
 
 util =
   notify: (subTitle, text) =>
