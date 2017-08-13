@@ -1,25 +1,13 @@
 conf =
-  debug: true
   moudle:
     reload: true
-    key: true
-    layout: true
-    mouse: true
+    karabiner: true
     hotkey: true
-    pwd: true
-  lcag: {'cmd', 'alt', 'ctrl'}
-  hypr: {'cmd', 'alt', 'ctrl', 'shift'}
-  notification:
-    up:
-      x: 80
-      y: 60
-    down:
-      x: 80
-      y: 80
-  oneTapTimeout: 0.2
-  appActiveTimeout: 0.1
-  appHideTimeout: 0.2
-  sysEventTimeout: 0.15
-  securityAgentWhiteList: {'系统偏好设置'}
+    app: true
+  karabiner:
+    path: '~/.config/karabiner/karabiner.json'
+    cmd: "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --copy-current-profile-to-system-default-profile"
+  app:
+    allowOutside: false
 
 conf

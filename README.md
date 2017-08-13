@@ -5,9 +5,8 @@ My hammerspoon config
 ```
 security add-generic-password -s hammerspoon -a system -w password
 git clone https://github.com/xream/.hammerspoon.git ~/.hammerspoon
-cp conf-example.moon conf.moon
-brew tap homebrew/versions
-brew install homebrew/versions/lua53
+cp conf{-example,}.moon
+brew install lua@5.3
 luarocks-5.3 install moonscript
-luarocks-5.3 install moses
+luarocks-5.3 install lodash
 ```
