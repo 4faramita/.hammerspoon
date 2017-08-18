@@ -14,7 +14,7 @@ app =
       a\hide!
     else
       hs.application.launchOrFocusByBundleID id
-      layout\exec('maximize') if maximize
+      layout\maximize! if maximize
 
 posTable = {}
 lastName = nil

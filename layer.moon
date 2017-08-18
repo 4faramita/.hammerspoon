@@ -1,5 +1,6 @@
 _ = require 'lodash'
 layout = require 'layout'
+mouse = require 'mouse'
 app = require 'app'
 
 layoutLayer = hs.hotkey.modal.new()
@@ -34,6 +35,7 @@ _.forEach layoutKeymap, (v, k) ->
   layoutLayer\bind '', k, ->
     k = tonumber(k)
     layout[v] layout, if _.isNumber(k) then k
+    mouse.center!
 
 appLayer = hs.hotkey.modal.new()
 -- hs.hotkey.bind '', 'f13', appLayer\enter, appLayer\exit
@@ -67,7 +69,7 @@ appKeymap =
   ['1']: ''
   ['2']: ''
   [',']: 'com.apple.systempreferences'
-  ['.']: -> hs.toggleConsole!
+  ['.']: hs.toggleConsole
 _.forEach appKeymap, (v, k) ->
   if type(v) == 'function'
     appLayer\bind '', k, v
@@ -78,5 +80,5 @@ _.forEach appKeymap, (v, k) ->
 layer =
   layout: layoutLayer
   app: appLayer
-  
+
 layer
