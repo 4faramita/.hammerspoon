@@ -2,11 +2,12 @@ conf =
   moudle:
     reload: true
     karabiner: true
-    hotkey: true
     app: true
+    key: true
   karabiner:
-    path: '~/.config/karabiner/karabiner.json'
-    cmd: "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --copy-current-profile-to-system-default-profile"
+    json: '~/.config/karabiner/karabiner.json'
+    yaml: '~/.config/karabiner/karabiner.yaml'
+    copy: "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --copy-current-profile-to-system-default-profile"
   app:
     allowOutside: false
 

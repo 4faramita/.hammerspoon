@@ -10,6 +10,12 @@ rectTable = {}
 layout =
   win: ->
     hs.window.frontmostWindow!
+  app: (win) =>
+    win or= @win!
+    win\application!
+  bundleID: (win) =>
+    win or= @win!
+    win\application!\bundleID!
   frame: (win) =>
     win or= @win!
     win\frame!\toUnitRect(win\screen!\frame!)

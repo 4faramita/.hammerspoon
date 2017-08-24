@@ -3,7 +3,10 @@ conf = require 'conf'
 util = require 'util'
 layout = require 'layout'
 mouse = require 'mouse'
-key = require 'key'
+{
+  keyStroke: press
+  keyStrokes: send
+} = hs.eventtap
 
 toggle = false
 app =
@@ -42,9 +45,9 @@ hs.application.watcher.new((name, event, app) ->
       eventName = 'launching'
       return
   if lastName == 'SecurityAgent' and _.includes({'系统偏好设置', 'Finder'}, name)
-    key.send util\getSysPwd!
+    send util\getSysPwd!
     if _.includes({'系统偏好设置'}, name)
-      key.press {}, 'return'
+      press {}, 'return'
   if eventName == 'activated'
     lastName = name
   else
