@@ -119,10 +119,6 @@ new({ keyDown, keyUp, flagsChanged }, (e) ->
       e: 'rightUp'
       z: 'leftDown'
       c: 'rightDown'
-      up: 'northScreen'
-      down: 'southScreen'
-      left: 'westScreen'
-      right: 'eastScreen'
       ['[']: 'preScreen'
       [']']: 'nextScreen'
       ['=']: 'larger'
@@ -130,11 +126,25 @@ new({ keyDown, keyUp, flagsChanged }, (e) ->
       ['1']: 'moveToScreen'
       ['2']: 'moveToScreen'
       ['3']: 'moveToScreen'
+      ['0']: 'mouse'
     v = map[name]
     return true unless v
     name = tonumber(name)
     layout[v](layout, if _.isNumber(name) then name)
     mouse.center!
+    return true
+  elseif flagsId == 11010368
+    -- rightAlt + fn
+    if event == flagsChanged
+      return false
+    if event == keyUp
+      return true
+    map =
+      up: 'clickNotificationUp'
+      down: 'clickNotificationDown'
+    v = map[name]
+    return true unless v
+    mouse[v](mouse)
     return true
   return false
 )\start!
