@@ -61,4 +61,12 @@ hs.application.watcher.new((name, event, app) ->
     lastName = nil
 )\start!
 
+-- hs.distributednotifications.new((name, object, userInfo) ->
+--   if name == 'com.apple.SecurityAgent.consoleLogin.UIShown'
+--     send util\getSysPwd!
+-- )\start!
+-- hs.timer.doEvery(1, ()->{
+--   print hs.execute('/usr/local/bin/pidof SecurityAgent')
+-- })
+
 app

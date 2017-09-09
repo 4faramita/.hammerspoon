@@ -9,9 +9,9 @@ hs.pathwatcher.new(conf.karabiner.json, ->
   -- https://github.com/tekezo/Karabiner-Elements/blob/master/src/scripts/copy_current_profile_to_system_default_profile.applescript
   output, status = hs.execute("echo "..util\getSysPwd!.."|sudo -S "..conf.karabiner.copy)
   if status
-    util.notify 'Karabiner', '同步配置'
+    util\notify 'Karabiner', '同步配置'
   else
-    util.notify 'Karabiner', '同步配置失败'
+    util\notify 'Karabiner', '同步配置失败'
   if yamlChanged
     yamlChanged = false
   else
