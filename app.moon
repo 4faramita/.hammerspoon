@@ -44,10 +44,10 @@ hs.application.watcher.new((name, event, app) ->
     when hs.application.watcher.launching
       eventName = 'launching'
       return
-  if lastName == 'SecurityAgent' and util\checkSecurityAgent! == '1'
-    send util\getSysPwd!
-    if _.includes({'系统偏好设置'}, name)
-      press {}, 'return'
+  -- if lastName == 'SecurityAgent' and util\checkSecurityAgent! == '1'
+  --   send util\getSysPwd!
+  --   if _.includes({'系统偏好设置'}, name)
+  --     press {}, 'return'
   if eventName == 'activated'
     lastName = name
   else

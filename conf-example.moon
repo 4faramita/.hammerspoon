@@ -5,6 +5,7 @@ conf =
     app: true
     key: true
     url: true
+    screen: true
   karabiner:
     json: '~/.config/karabiner/karabiner.json'
     yaml: '~/.config/karabiner/karabiner.yaml'

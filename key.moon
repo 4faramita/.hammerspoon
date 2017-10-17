@@ -6,11 +6,13 @@ _ = require 'lodash'
 util = require 'util'
 app = require 'app'
 mouse = require 'mouse'
+screen = require 'screen'
 layout = require 'layout'
 bind = hs.hotkey.bind
 
 appMap =
   a: 'com.github.atom'
+  b: 'com.twitter.twitter-mac'
   c: 'com.apple.iCal'
   d: 'com.eusoft.eudic'
   e: 'com.bohemiancoding.sketch3'
@@ -88,6 +90,7 @@ layoutMap =
   ['0']: 'mouse'
   up: mouse\clickNotificationUp
   down: mouse\clickNotificationDown
+  delete: screen\set
 
 _.forEach layoutMap, (v, k) ->
   if type(v) == 'function'
